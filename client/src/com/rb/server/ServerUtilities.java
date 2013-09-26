@@ -1,5 +1,6 @@
 package com.rb.server;
 
+import static com.rb.server.CommonUtilities.IN_REGISTRATION_ID;
 import static com.rb.server.CommonUtilities.SERVER_URL;
 import static com.rb.server.CommonUtilities.TAG;
 import static com.rb.server.CommonUtilities.displayMessage;
@@ -160,11 +161,12 @@ public final class ServerUtilities {
         }
       }
     
-     static void sendMessage(final String message){
+     static void sendMessage(final String message, String registrationId){
          Log.i(TAG, "Send mesaage " + message);
          String serverUrl = SERVER_URL + "/sendAll";
          Map<String, String> params = new HashMap<String, String>();
          params.put("message", message);
+         params.put(IN_REGISTRATION_ID, registrationId);
     	 try {
 			post(serverUrl, params);
 		} catch (IOException e) {

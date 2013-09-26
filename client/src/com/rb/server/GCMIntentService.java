@@ -18,7 +18,6 @@ import com.google.android.gcm.GCMRegistrar;
  */
 public class GCMIntentService extends GCMBaseIntentService {
 
-    @SuppressWarnings("hiding")
     private static final String TAG = "GCMIntentService";
 
     public GCMIntentService() {
@@ -49,8 +48,9 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onMessage(Context context, Intent intent) {
         Log.i(TAG, "Received message");
         //String message = getString(R.string.gcm_message);
-        String message = intent.getStringExtra("mes");
-        displayMessage(context, message);
+        String message = intent.getStringExtra(CommonUtilities.EXTRA_MESSAGE);
+        String inRegistrationId = intent.getStringExtra(CommonUtilities.IN_REGISTRATION_ID);
+        displayMessage(context, message, inRegistrationId);
         // notifies user
         generateNotification(context, message);
     }

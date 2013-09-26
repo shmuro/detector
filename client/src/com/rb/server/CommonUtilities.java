@@ -10,9 +10,9 @@ import android.content.Intent;
 public final class CommonUtilities {
 
 	/**
-	 * Base URL of the Demo Server (such as http://my_host:8080/gcm-demo)
+	 * Base URL of the Demo Server (such as http://my_host:8080/api)
 	 */
-	static final String SERVER_URL = "http://178.137.80.231:8888/detector";
+	static final String SERVER_URL = "http://detectorapi.appspot.com";
 
 	/**
 	 * Google API project id registered to use GCM.
@@ -22,7 +22,7 @@ public final class CommonUtilities {
 	/**
 	 * Tag used on log messages.
 	 */
-	static final String TAG = "GCMDemo";
+	static final String TAG = "GCM";
 
 	/**
 	 * Intent used to display a message in the screen.
@@ -33,6 +33,9 @@ public final class CommonUtilities {
 	 * Intent's extra that contains the message to be displayed.
 	 */
 	static final String EXTRA_MESSAGE = "message";
+	
+	static final String IN_REGISTRATION_ID = "inregid";
+	
 
 	/**
 	 * Notifies UI to display a message.
@@ -45,9 +48,15 @@ public final class CommonUtilities {
 	 * @param message
 	 *            message to be displayed.
 	 */
-	static void displayMessage(Context context, String message) {
+	static void displayMessage(Context context, String message, String inRegistrationId) {
 		Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
 		intent.putExtra(EXTRA_MESSAGE, message);
+		if (inRegistrationId != null)
+			intent.putExtra(IN_REGISTRATION_ID, inRegistrationId);
 		context.sendBroadcast(intent);
+	}
+	
+	static void displayMessage(Context context, String message){
+		displayMessage(context, message, null);
 	}
 }

@@ -2,6 +2,7 @@ package com.rb.server;
 
 import static com.rb.server.CommonUtilities.DISPLAY_MESSAGE_ACTION;
 import static com.rb.server.CommonUtilities.EXTRA_MESSAGE;
+import static com.rb.server.CommonUtilities.IN_REGISTRATION_ID;
 import static com.rb.server.CommonUtilities.SENDER_ID;
 import static com.rb.server.CommonUtilities.SERVER_URL;
 import android.app.Activity;
@@ -40,13 +41,14 @@ public class DemoActivity extends Activity implements OnClickListener {
 		case R.id.buttonSend:
 			final String message = inputMessage.getText().toString();
 			if (!TextUtils.isEmpty(message)) {
-				mDisplay.append("me: " + message + "\n");
 				inputMessage.getText().clear();
 				new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						ServerUtilities.sendMessage(message);
+						String registrationId = GCMRegistrar
+								.getRegistrationId(DemoActivity.this);
+						ServerUtilities.sendMessage(message, registrationId);
 					}
 				}).start();
 			} else {
@@ -138,12 +140,12 @@ public class DemoActivity extends Activity implements OnClickListener {
 		 * unregister the device (you will also need to uncomment the equivalent
 		 * options on options_menu.xml).
 		 */
-		case R.id.options_register:
-			GCMRegistrar.register(this, SENDER_ID);
+	  /*case R.id.options_register:
+		GCMRegistrar.register(this, SENDER_ID);
 			return true;
 		case R.id.options_unregister:
 			GCMRegistrar.unregister(this);
-			return true;
+			return true;*/
 		case R.id.options_clear:
 			mDisplay.setText(null);
 			return true;
@@ -175,8 +177,20 @@ public class DemoActivity extends Activity implements OnClickListener {
 	private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
-			mDisplay.append("user: " + newMessage + "\n");
+			Bundle extras = intent.getExtras();
+			String newMessage = extras.getString(EXTRA_MESSAGE);
+
+			String registrationId = GCMRegistrar
+					.getRegistrationId(DemoActivity.this);
+			String inRegistrationId = extras.getString(IN_REGISTRATION_ID);
+			if (!TextUtils.isEmpty(registrationId) && !TextUtils.isEmpty(inRegistrationId)) {
+				String user = inRegistrationId.substring(0, 5) + ": ";
+				if (registrationId.equals(inRegistrationId)) {
+					user = "me: ";
+				}
+				newMessage = user + newMessage;
+			}
+			mDisplay.append(newMessage + "\n");
 		}
 	};
 }

@@ -22,14 +22,14 @@
          options on DemoActivity.onOptionsItemSelected())
     -->
     
-    <item
-        android:id="@+id/options_register"
-        android:title="@string/options_register">
-    </item>
-    <item
-        android:id="@+id/options_unregister"
-        android:title="@string/options_unregister">
-    </item>
+<!--     <item -->
+<!--         android:id="@+id/options_register" -->
+<!--         android:title="@string/options_register"> -->
+<!--     </item> -->
+<!--     <item -->
+<!--         android:id="@+id/options_unregister" -->
+<!--         android:title="@string/options_unregister"> -->
+<!--     </item> -->
     
     <item
         android:id="@+id/options_clear"

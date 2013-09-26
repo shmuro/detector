@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<queue-entries>
+  <queue>
+    <name>gcm</name>
+    <rate>10/s</rate>
+  </queue>
+</queue-entries>
