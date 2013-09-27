@@ -184,7 +184,7 @@ public class DemoActivity extends Activity implements OnClickListener {
 					.getRegistrationId(DemoActivity.this);
 			String inRegistrationId = extras.getString(IN_REGISTRATION_ID);
 			if (!TextUtils.isEmpty(registrationId) && !TextUtils.isEmpty(inRegistrationId)) {
-				String user = inRegistrationId.substring(0, 5) + ": ";
+				String user = inRegistrationId.substring(inRegistrationId.length() - 5, inRegistrationId.length()) + ": ";
 				if (registrationId.equals(inRegistrationId)) {
 					user = "me: ";
 				}

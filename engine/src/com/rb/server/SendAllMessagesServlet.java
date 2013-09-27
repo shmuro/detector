@@ -59,7 +59,8 @@ public class SendAllMessagesServlet extends BaseServlet {
       }
     }
     req.setAttribute(HomeServlet.ATTRIBUTE_STATUS, status.toString());
-    getServletContext().getRequestDispatcher("/home").forward(req, resp);
+    req.getRequestDispatcher("/home").forward(req, resp);
+    //getServletContext().getRequestDispatcher("/home").forward(req, resp);
+    //resp.sendRedirect("/home");
   }
-
 }
